@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Administrator</title>
 </head>
 <body>
 <c:if test="${not empty message }">
@@ -19,7 +19,7 @@
 <form method="post" action="addBookAuthor.do">
 Name: <input type="text" name="book_name" />  
 Author: <input type="text" name="author_name" />
-Genre: <input type="text" name="genre" />
+Genre: <input type="text" name="genre_name" />
 Publisher: <input type="text" name="publisher_name" />
 <input type="submit" value="Add"> <br/><br/>
 </form>

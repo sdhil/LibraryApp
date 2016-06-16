@@ -19,17 +19,19 @@ public class FrontController extends HttpServlet {
 		String reqURI = req.getRequestURI();
 		switch (reqURI) {
 		case "/LibraryApp/addBookAuthor.do": {
-			
+			new Model().addBookAuthor(req, resp);
 		}
 		case "/LibraryApp/addPublisher.do": {
 			new Model().addPublisher(req, resp);
 			req.getRequestDispatcher("admin.jsp").forward(req, resp);
 		}
 		case "/LibraryApp/addBranch.do": {
-
+			new Model().addBranch(req, resp);
+			req.getRequestDispatcher("admin.jsp").forward(req, resp);
 		}
 		case "/LibraryApp/addBorrower.do": {
-
+			new Model().addBorrower(req, resp);
+			req.getRequestDispatcher("admin.jsp").forward(req, resp);
 		}
 		default:{
 			throw new IllegalArgumentException("Invalid URL");

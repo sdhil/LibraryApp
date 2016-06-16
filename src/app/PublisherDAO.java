@@ -3,6 +3,7 @@ package app;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import domain.Publisher;
@@ -12,12 +13,7 @@ public class PublisherDAO {
 	private Connection conn;
 	
 	public PublisherDAO() {
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "Welcome1");
-			conn.setAutoCommit(false);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		conn = ConnectionFactory.openConnection();
 	}
 	
 	public void close() {
@@ -58,6 +54,36 @@ public class PublisherDAO {
 			}	
 		}
 		return false;
+	}
+	
+	public Publisher getPublisherByName(String name) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM tbl_publisher WHERE publisherName = ?";
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, name);
+			rs = stmt.executeQuery();
+			Publisher publisher = null;
+			while(rs.next()) {
+				publisher = new Publisher();
+				publisher.setId(rs.getInt("publisherId"));
+				publisher.setName(rs.getString("publisherName"));
+				publisher.setAddress(rs.getString("publisherAddress"));
+				publisher.setPhone(rs.getString("publisherPhone"));
+			}
+			return publisher;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}
 	}
 	
 }
