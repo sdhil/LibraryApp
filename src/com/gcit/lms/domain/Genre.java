@@ -1,15 +1,29 @@
 package com.gcit.lms.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Genre implements Serializable{
 	
 	private static final long serialVersionUID = 7922025997056558559L;
 	int id;
 	String name;
+	List<Book> books;
 	
 	public Genre() {
 		
+	}
+	
+	public Genre(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Genre(int id, String name, List<Book> books) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.books = books;
 	}
 
 	public Genre(int id, String name) {
@@ -41,6 +55,14 @@ public class Genre implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 
 	@Override

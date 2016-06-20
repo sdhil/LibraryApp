@@ -15,7 +15,12 @@ public class Publisher implements Serializable{
 	public Publisher() {
 		
 	}
-		
+			
+	public Publisher(int id) {
+		super();
+		this.id = id;
+	}
+
 	public Publisher(int id, String name, String address, String phone, List<Book> books) {
 		super();
 		this.id = id;

@@ -13,6 +13,15 @@ public class Author implements Serializable{
 	public Author() {
 		
 	}
+	
+	
+
+	public Author(int id) {
+		super();
+		this.id = id;
+	}
+
+
 
 	public Author(int id, String name, List<Book> books) {
 		super();

@@ -1,46 +1,47 @@
 package com.gcit.lms.dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.gcit.lms.domain.Borrower;
 
-public class BorrowerDAO {
+public class BorrowerDAO extends BaseDAO{
 	
-	Connection conn;
-	
-	public BorrowerDAO() {
-		conn = ConnectionFactory.openConnection();
+	public BorrowerDAO(Connection conn) {
+		super(conn);
 	}
 
 	public boolean insertBorrower(Borrower borrower) {
-		PreparedStatement stmt = null;
 		String sql = "INSERT INTO tbl_borrower(name, address, phone) VALUES(?,?,?)";
 		try {
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, borrower.getName());
-			stmt.setString(2, borrower.getAddress());
-			stmt.setString(3, borrower.getPhone());
-			int rows = stmt.executeUpdate();
-			if(rows == 1) {
-				conn.commit();
-				return true;
-			} else {
-				conn.rollback();
-				return false;
-			}
-		} catch (SQLException e) {
+			return save(sql, new Object[] {borrower.getName(), borrower.getAddress(), borrower.getPhone()});
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			return false;
-		} finally {
-			try {
-				stmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}	
 		}
+	}
+
+	@Override
+	public List<?> extractData(ResultSet rs) throws SQLException {
+		List<Borrower> borrowers = new ArrayList<Borrower>();
+		while(rs.next()) {
+			Borrower b = new Borrower();
+			b.setCardNo(rs.getInt("cardNo"));
+			b.setName(rs.getString("name"));
+			b.setAddress(rs.getString("address"));
+			b.setPhone(rs.getString("phone"));
+			borrowers.add(b);
+		}
+		return borrowers;
+	}
+
+	@Override
+	public List<?> extractDataFirstLevel(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
