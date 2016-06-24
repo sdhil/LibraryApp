@@ -1,9 +1,19 @@
-package com.gcit.lms.dao;
+package com.gcit.lms.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.gcit.lms.dao.AuthorDAO;
+import com.gcit.lms.dao.BookAuthorDAO;
+import com.gcit.lms.dao.BookDAO;
+import com.gcit.lms.dao.BookGenreDAO;
+import com.gcit.lms.dao.BorrowerDAO;
+import com.gcit.lms.dao.BranchDAO;
+import com.gcit.lms.dao.ConnectionFactory;
+import com.gcit.lms.dao.GenreDAO;
+import com.gcit.lms.dao.PublisherDAO;
+import com.gcit.lms.dao.UserDAO;
 import com.gcit.lms.domain.Author;
 import com.gcit.lms.domain.Book;
 import com.gcit.lms.domain.Borrower;
@@ -12,7 +22,7 @@ import com.gcit.lms.domain.Genre;
 import com.gcit.lms.domain.Publisher;
 import com.gcit.lms.domain.User;
 
-public class BusinessDelegate {
+public class AdminService {
 	
 	public User login(String username, String password) {
 		Connection conn = ConnectionFactory.openConnection();
@@ -124,6 +134,7 @@ public class BusinessDelegate {
 				conn.commit();
 				return true;
 			} else {
+				conn.rollback();
 				return false;
 			}
 		} catch (Exception e) {

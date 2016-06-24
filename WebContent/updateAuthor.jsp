@@ -16,7 +16,7 @@
 <a href="home.jsp"><button>LogOut</button></a>
 <a href="admin.jsp"><button>Back</button></a>
 <table class="table table-striped">
-	<tr><th>AuthorId</th><th>Name</th><th>Books</th></tr>
+	<tr><th>AuthorId</th><th>Name</th><th>Books</th><th>Edit</th><th>Delete</th></tr>
 	<c:forEach var="author" items="${authors }">
 	<tr>
 		<td><c:out value="${author.id }"></c:out></td>
@@ -26,6 +26,8 @@
 				<c:out value="${book.title },  "> </c:out>
 			</c:forEach>
 		</td>
+		<td> <button>Edit</button></td>
+		<td><button>Delete</button></td>
 	</tr>
 	</c:forEach>
 </table>

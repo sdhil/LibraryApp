@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gcit.lms.dao.BusinessDelegate;
+import com.gcit.lms.service.AdminService;
 import com.gcit.lms.domain.Author;
 import com.gcit.lms.domain.Book;
 import com.gcit.lms.domain.Borrower;
@@ -27,7 +27,7 @@ public class Model {
 		publisher.setName(req.getParameter("publisher_name"));
 		publisher.setAddress(req.getParameter("publisher_address"));
 		publisher.setPhone(req.getParameter("publisher_phone"));
-		boolean insertPublisher = new BusinessDelegate().insertPublisher(publisher);
+		boolean insertPublisher = new AdminService().insertPublisher(publisher);
 		if (insertPublisher) {
 			req.setAttribute("message", "Successfully added the publisher");
 			return true;
@@ -41,7 +41,7 @@ public class Model {
 		Branch branch = new Branch();
 		branch.setBranchName(req.getParameter("branch_name"));
 		branch.setBranchAddress(req.getParameter("branch_address"));
-		boolean insertBranch = new BusinessDelegate().insertBranch(branch);
+		boolean insertBranch = new AdminService().insertBranch(branch);
 		if (insertBranch) {
 			req.setAttribute("message", "Successfully added the branch");
 			return true;
@@ -56,7 +56,7 @@ public class Model {
 		borrower.setName(req.getParameter("borrower_name"));
 		borrower.setAddress(req.getParameter("borrower_address"));
 		borrower.setPhone(req.getParameter("borrower_phone"));
-		boolean insertBorrower = new BusinessDelegate().insertBorrower(borrower);
+		boolean insertBorrower = new AdminService().insertBorrower(borrower);
 		if (insertBorrower) {
 			req.setAttribute("message", "Successfully added the borrower");
 			return true;
@@ -83,7 +83,7 @@ public class Model {
 			genreList.add(new Genre(Integer.parseInt(genreId)));
 		}
 		book.setGenres(genreList);
-		boolean insertBook = new BusinessDelegate().insertBook(book);
+		boolean insertBook = new AdminService().insertBook(book);
 		if (insertBook) {
 			req.setAttribute("message", "Successfully added the book");
 			return true;
@@ -96,7 +96,7 @@ public class Model {
 	public boolean addAuthor(HttpServletRequest req, HttpServletResponse resp) {
 		Author author = new Author();
 		author.setName(req.getParameter("author_name"));
-		boolean insertAuthor = new BusinessDelegate().insertAuthor(author);
+		boolean insertAuthor = new AdminService().insertAuthor(author);
 		if (insertAuthor) {
 			req.setAttribute("message", "Successfully added the author");
 			return true;
@@ -108,7 +108,7 @@ public class Model {
 	}
 
 	public boolean getAllAuthors(HttpServletRequest req, HttpServletResponse resp) {
-		List<Author> authors = new BusinessDelegate().getAllAuthors();
+		List<Author> authors = new AdminService().getAllAuthors();
 		if (authors != null) {
 			req.getSession().setAttribute("authors", authors);
 			return true;
@@ -121,7 +121,7 @@ public class Model {
 	public boolean addGenre(HttpServletRequest req, HttpServletResponse resp) {
 		Genre genre = new Genre();
 		genre.setName(req.getParameter("genre_name"));
-		boolean insertGenre = new BusinessDelegate().insertGenre(genre);
+		boolean insertGenre = new AdminService().insertGenre(genre);
 		if (insertGenre) {
 			req.setAttribute("message", "Successfully added the genre");
 			return true;
@@ -132,7 +132,7 @@ public class Model {
 	}
 
 	public boolean getAllGenres(HttpServletRequest req, HttpServletResponse resp) {
-		List<Genre> genres = new BusinessDelegate().getAllGenres();
+		List<Genre> genres = new AdminService().getAllGenres();
 		if (genres != null) {
 			req.getSession().setAttribute("genres", genres);
 			return true;
@@ -143,7 +143,7 @@ public class Model {
 	}
 
 	public boolean getAllPublishers(HttpServletRequest req, HttpServletResponse resp) {
-		List<Publisher> publishers = new BusinessDelegate().getAllPublishers();
+		List<Publisher> publishers = new AdminService().getAllPublishers();
 		if (publishers != null) {
 			req.getSession().setAttribute("publishers", publishers);
 			return true;
@@ -154,7 +154,7 @@ public class Model {
 	}
 
 	public boolean getAllBooks(HttpServletRequest req, HttpServletResponse resp) {
-		List<Book> books = new BusinessDelegate().getAllBooks();
+		List<Book> books = new AdminService().getAllBooks();
 		if (books != null) {
 			req.getSession().setAttribute("books", books);
 			return true;
@@ -168,7 +168,7 @@ public class Model {
 	public int login(HttpServletRequest req, HttpServletResponse resp) {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		User user = new BusinessDelegate().login(username, password);
+		User user = new AdminService().login(username, password);
 		if (user != null && user.getPassword().equals(password)) {
 			req.getSession().setAttribute("user_data", user);
 			if(user.getRoleid() == 1)
